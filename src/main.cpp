@@ -1,6 +1,10 @@
 #include <iostream>
-
+#include "stack.h"
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Stack<int> stack(20);
+    for(int i = 0; i < 20; i++){
+        stack.push(i);
+    }
+
+    stack.printStack();
 }
