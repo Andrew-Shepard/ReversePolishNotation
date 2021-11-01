@@ -7,15 +7,16 @@
 #include <iostream>
 template<typename T>
 
-#define CAPACITY 1000
-
 class Stack {
+protected:
     T *stack = nullptr;
     T *first = nullptr;
     T *elements = nullptr;
     uint64_t length = 0;
-    uint64_t capacity = 0;
+    size_t capacity = 0;
 public:
+       Stack(){
+       }
        Stack(uint64_t capacity){
             this->capacity = capacity;
             stack = new T[capacity];
@@ -66,6 +67,28 @@ public:
 
        uint64_t getLength() {
            return length;
+       }
+
+       void setCapacity(size_t capacity){
+            //create a new array of size changed capacity
+            T* new_stack = new T[capacity];
+            //loop through the current array and copy each element
+            for(int i = 0; i<this->capacity; i++){
+                //dont exceed the new size
+                if (i <= capacity){
+                    new_stack[i] = elements[i];
+                }
+            }
+            // delete the contents of the elements pointer
+            delete[] stack;
+            // point to the new array
+            stack = new_stack;
+            //delete the temporary pointer
+            delete new_stack;
+            new_stack = nullptr;
+            // set the objects capacity to the parameterized capacity
+            elements = stack;
+            first = stack;
        }
 
        void printStack() {
