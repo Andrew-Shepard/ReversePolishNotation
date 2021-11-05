@@ -15,8 +15,6 @@ protected:
     uint64_t length = 0;
     size_t capacity = 0;
 public:
-       Stack(){
-       }
        Stack(uint64_t capacity){
             this->capacity = capacity;
             stack = new T[capacity];
@@ -57,7 +55,7 @@ public:
        }
 
        T top(){
-           return first;
+           return *first;
        }
 
        void clear() {
