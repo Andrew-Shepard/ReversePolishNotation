@@ -3,4 +3,4 @@ project(ReversePolishNotation)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(ReversePolishNotation src/main.cpp src/Stack.h src/ReversePolishNotationCalculator.cpp src/ReversePolishNotationCalculator.h)
+add_executable(ReversePolishNotation src/main.cpp src/Stack.h src/ReversePolishNotationCalculator.cpp src/ReversePolishNotationCalculator.h src/infix.cpp)

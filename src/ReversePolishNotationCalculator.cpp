@@ -12,7 +12,7 @@ bool ReversePolishNotationCalculator::isAnOperator(std::string entry) {
             return true;
         case '/':
             return true;
-        case '*':
+        case 'x':
             return true;
         default:
             return false;
@@ -39,7 +39,7 @@ double ReversePolishNotationCalculator::evaluate(std::string operation){
         std::string found_operation = *top();
         pop();
         operand_1 = evaluate(found_operation);
-    } else {
+    } else if (length > 0){
         operand_1_string = *top();
         operand_1 = std::stod(operand_1_string);
         pop();
@@ -49,8 +49,7 @@ double ReversePolishNotationCalculator::evaluate(std::string operation){
         std::string found_operation = *top();
         pop();
         operand_2 = evaluate(found_operation);
-    } else {
-        std::cout << "o2 string: " << *top() << std::endl;
+    } else if (length > 0){
         operand_2_string = *top();
         operand_2 = std::stod(operand_2_string);
         pop();
@@ -63,7 +62,7 @@ double ReversePolishNotationCalculator::evaluate(std::string operation){
             return operand_2 - operand_1;
         case '/':
             return operand_2 / operand_1;
-        case '*':
+        case 'x':
             return operand_2 * operand_1;
         default:
             return -1;
