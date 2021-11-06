@@ -13,7 +13,7 @@ public:
     using Stack<char>::Stack;
     double evaluate();
     double evaluate(char operation);
-
+    void push(char data);
 };
 
 

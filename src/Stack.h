@@ -11,6 +11,7 @@ class Stack {
 protected:
     T *stack = nullptr;
     T *first = nullptr;
+    T *top_of_stack = nullptr;
     T *elements = nullptr;
     uint64_t length = 0;
     size_t capacity = 0;
@@ -22,14 +23,13 @@ public:
             first = stack;
        }
 
-       void push(T data) {
-           if (length == capacity){
-               return;
-           }
-
-           length++;
-
-           *first = data;
+        void push(T data) {
+            if (length == capacity){
+                return;
+            }
+            length++;
+            top_of_stack = first;
+            *first = data;
 
            if (first != &elements[capacity - 1]) {
                first++;
@@ -48,14 +48,15 @@ public:
            length--;
            if(first != elements){
                first--;
+               top_of_stack--;
            }
            else{
                first = stack;
            }
        }
 
-       T top(){
-           return *first;
+       T* top(){
+           return top_of_stack;
        }
 
        void clear() {
@@ -101,7 +102,7 @@ public:
             }
        }
 
-       ~Stack() {
+       virtual ~Stack() {
            if (stack)
                delete[] stack;
        }

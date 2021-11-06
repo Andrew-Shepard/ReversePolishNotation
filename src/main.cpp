@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     std::string s = arguments.str();
     const char* p = s.c_str();
 
-    for (int i = argc-1; i > 0; --i){
+    for (int i = 0; i < argc-1; ++i){
         reversePolishNotationCalculator.push(p[i]);
     }
 

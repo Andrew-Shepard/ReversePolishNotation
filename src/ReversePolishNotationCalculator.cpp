@@ -18,8 +18,33 @@ bool ReversePolishNotationCalculator::isAnOperator(char character) {
     }
 }
 
+void ReversePolishNotationCalculator::push(char data) {
+    switch(data){
+        case ' ':
+            return;
+        case '\n':
+            return;
+        default:
+            if (std::isblank(data))
+                return;
+    }
+    if (length == capacity){
+        return;
+    }
+    length++;
+    top_of_stack = first;
+    *first = data;
+
+    if (first != &elements[capacity - 1]) {
+        first++;
+    }else{
+        first = stack;
+    }
+}
+
 double ReversePolishNotationCalculator::evaluate(){
-    char32_t top_value = top();
+    char top_value = *top();
+    printStack();
     if (isAnOperator(top_value)){
         pop();
         return evaluate(top_value);
@@ -33,31 +58,19 @@ double ReversePolishNotationCalculator::evaluate(char operation){
     double operand_2 = 0;
     std::string operand_2_string = "";
     //view the top element in the stack
-    std::string top_string(1,top());
-    //remove the whitespace
-    while (top_string == " "){
-        top_string.clear();
-        pop();
-        top_string.push_back(top());
-    }
+    std::string top_string(1,*top());
 
-    if (isAnOperator(top())){
-         operand_1 = evaluate(top());
+    if (isAnOperator(*top())){
+        operand_1 = evaluate(*top());
     } else {
-        while (top_string != " " || length > 0){
-            operand_1_string.push_back(top());
+        while (length > 0){
+            operand_1_string.push_back(*top());
         }
         operand_1 = std::stod(operand_1_string);
     }
 
-    while (top_string == " "){
-        top_string.clear();
-        pop();
-        top_string.push_back(top());
-    }
-
-    while (top_string != " " || length > 0){
-        operand_2_string.push_back(top());
+    while (length > 0){
+        operand_2_string.push_back(*top());
     }
     operand_2 = std::stod(operand_1_string);
 
