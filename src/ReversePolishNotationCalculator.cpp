@@ -3,7 +3,8 @@
 //
 
 #include "ReversePolishNotationCalculator.h"
-bool ReversePolishNotationCalculator::isAnOperator(char character) {
+bool ReversePolishNotationCalculator::isAnOperator(std::string entry) {
+    char character = entry[0];
     switch (character) {
         case '+':
             return true;
@@ -18,33 +19,8 @@ bool ReversePolishNotationCalculator::isAnOperator(char character) {
     }
 }
 
-void ReversePolishNotationCalculator::push(char data) {
-    switch(data){
-        case ' ':
-            return;
-        case '\n':
-            return;
-        default:
-            if (std::isblank(data))
-                return;
-    }
-    if (length == capacity){
-        return;
-    }
-    length++;
-    top_of_stack = first;
-    *first = data;
-
-    if (first != &elements[capacity - 1]) {
-        first++;
-    }else{
-        first = stack;
-    }
-}
-
 double ReversePolishNotationCalculator::evaluate(){
-    char top_value = *top();
-    printStack();
+    std::string top_value = *top();
     if (isAnOperator(top_value)){
         pop();
         return evaluate(top_value);
@@ -52,37 +28,43 @@ double ReversePolishNotationCalculator::evaluate(){
     return -1;
 }
 
-double ReversePolishNotationCalculator::evaluate(char operation){
+double ReversePolishNotationCalculator::evaluate(std::string operation){
     double operand_1 = 0;
     std::string operand_1_string = "";
     double operand_2 = 0;
     std::string operand_2_string = "";
     //view the top element in the stack
-    std::string top_string(1,*top());
 
     if (isAnOperator(*top())){
-        operand_1 = evaluate(*top());
+        std::string found_operation = *top();
+        pop();
+        operand_1 = evaluate(found_operation);
     } else {
-        while (length > 0){
-            operand_1_string.push_back(*top());
-        }
+        operand_1_string = *top();
         operand_1 = std::stod(operand_1_string);
+        pop();
     }
 
-    while (length > 0){
-        operand_2_string.push_back(*top());
+    if (isAnOperator(*top())) {
+        std::string found_operation = *top();
+        pop();
+        operand_2 = evaluate(found_operation);
+    } else {
+        std::cout << "o2 string: " << *top() << std::endl;
+        operand_2_string = *top();
+        operand_2 = std::stod(operand_2_string);
+        pop();
     }
-    operand_2 = std::stod(operand_1_string);
 
-    switch(operation){
+    switch((char)operation[0]){
         case '+':
-            return operand_1 + operand_2;
+            return operand_2 + operand_1;
         case '-':
-            return operand_1 - operand_2;
+            return operand_2 - operand_1;
         case '/':
-            return operand_1 / operand_2;
+            return operand_2 / operand_1;
         case '*':
-            return operand_1 * operand_2;
+            return operand_2 * operand_1;
         default:
             return -1;
     }

@@ -9,16 +9,14 @@ int main(int argc, char** argv)
     std::cout << "You have entered " << argc
          << " arguments:" << "\n";
     std::stringstream arguments;
+    std::string s;
     //ignore the path call and take the arguments
     for (int i = 1; i < argc; ++i){
         arguments << argv[i];
-    }
-
-    std::string s = arguments.str();
-    const char* p = s.c_str();
-
-    for (int i = 0; i < argc-1; ++i){
-        reversePolishNotationCalculator.push(p[i]);
+        s = arguments.str();
+        reversePolishNotationCalculator.push(s);
+        arguments.str("");
+        arguments.clear();
     }
 
     std::cout << reversePolishNotationCalculator.evaluate() << std::endl;

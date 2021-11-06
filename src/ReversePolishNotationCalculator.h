@@ -6,14 +6,13 @@
 #define REVERSEPOLISHNOTATION_REVERSEPOLISHNOTATIONCALCULATOR_H
 
 #include "Stack.h"
-class ReversePolishNotationCalculator : public Stack<char> {
-    bool isAnOperator(char character);
+class ReversePolishNotationCalculator : public Stack<std::string> {
+    bool isAnOperator(std::string character);
 public:
     //inherit constructor
-    using Stack<char>::Stack;
+    using Stack<std::string>::Stack;
     double evaluate();
-    double evaluate(char operation);
-    void push(char data);
+    double evaluate(std::string operation);
 };
 
 
